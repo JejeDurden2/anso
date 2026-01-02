@@ -24,7 +24,7 @@ export function Modal({ isOpen, onClose, children, className }: ModalProps): JSX
       {/* Modal */}
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
         <div
-          className={cn('card relative max-h-[90vh] w-full max-w-lg overflow-auto', className)}
+          className={cn('relative max-h-[90vh] w-full max-w-lg overflow-auto rounded-lg border bg-card text-card-foreground shadow-sm', className)}
           role="dialog"
           aria-modal="true"
         >
