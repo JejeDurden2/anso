@@ -88,10 +88,10 @@ export function TasksPanel({ deals, isLoading: isDealsLoading }: TasksPanelProps
         </div>
 
         <Link
-          to="/app/settings/automations"
+          to="/app/tasks"
           className="flex items-center gap-1 text-xs font-medium text-brand-600 hover:text-brand-700"
         >
-          Gérer
+          Voir tout
           <ArrowRight className="h-3 w-3" />
         </Link>
       </div>

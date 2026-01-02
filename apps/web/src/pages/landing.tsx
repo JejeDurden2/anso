@@ -125,6 +125,7 @@ export function LandingPage(): JSX.Element {
                 '10 contacts maximum',
                 '1 utilisateur',
                 'Pipeline illimité',
+                'Gestion des tâches',
                 'Support par email',
               ]}
               ctaText="Commencer gratuitement"
@@ -136,6 +137,7 @@ export function LandingPage(): JSX.Element {
               features={[
                 'Contacts illimités',
                 '1 utilisateur',
+                'Automatisations',
                 'Import/Export CSV',
                 'Support prioritaire',
               ]}
@@ -149,6 +151,7 @@ export function LandingPage(): JSX.Element {
               features={[
                 'Contacts illimités',
                 "Jusqu'à 3 utilisateurs",
+                'Automatisations',
                 'Import/Export CSV',
                 'Support prioritaire',
               ]}

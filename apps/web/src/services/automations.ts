@@ -102,7 +102,6 @@ export function useCreateAutomation(workspaceId: string) {
 
       // Optimistic update
       queryClient.setQueryData<AutomationRule[]>(automationKeys.list(workspaceId), (old) => {
-        if (!old) return old;
         const optimisticAutomation: AutomationRule = {
           id: `temp-${Date.now()}`,
           workspaceId,
@@ -114,7 +113,7 @@ export function useCreateAutomation(workspaceId: string) {
           createdAt: new Date(),
           updatedAt: new Date(),
         };
-        return [...old, optimisticAutomation];
+        return [...(old ?? []), optimisticAutomation];
       });
 
       return { previousAutomations };

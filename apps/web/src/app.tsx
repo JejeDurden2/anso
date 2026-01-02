@@ -11,6 +11,7 @@ import { DealsPage } from '@/pages/deals';
 import { LandingPage } from '@/pages/landing';
 import { LoginPage } from '@/pages/login';
 import { SettingsPage } from '@/pages/settings';
+import { TasksPage } from '@/pages/tasks';
 
 export function App(): JSX.Element {
   return (
@@ -35,8 +36,9 @@ export function App(): JSX.Element {
             <Route path="contacts" element={<ContactsPage />} />
             <Route path="contacts/:id" element={<ContactDetailPage />} />
             <Route path="deals" element={<DealsPage />} />
+            <Route path="tasks" element={<TasksPage />} />
+            <Route path="automations" element={<AutomationsPage />} />
             <Route path="settings" element={<SettingsPage />} />
-            <Route path="settings/automations" element={<AutomationsPage />} />
           </Route>
 
           {/* Catch all */}

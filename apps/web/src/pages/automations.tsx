@@ -1,7 +1,9 @@
 import type { CreateAutomationRuleInput } from '@anso/types';
-import { Button } from '@anso/ui';
-import { Loader2, Plus, Zap, Sparkles } from 'lucide-react';
+import { Plan } from '@anso/types';
+import { Button, Card } from '@anso/ui';
+import { Loader2, Plus, Zap, Sparkles, Lock } from 'lucide-react';
 import { useState, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 
 import { AutomationRuleCard, AutomationRuleForm } from '@/components/automations';
 import { useCurrentWorkspace } from '@/hooks/use-workspace';
@@ -16,9 +18,12 @@ import {
 import { useStages } from '@/services/stages';
 
 export function AutomationsPage(): JSX.Element {
-  const { workspaceId, isLoading: isWorkspaceLoading } = useCurrentWorkspace();
+  const { workspaceId, workspace, isLoading: isWorkspaceLoading } = useCurrentWorkspace();
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingRule, setEditingRule] = useState<string | null>(null);
+
+  const currentPlan = workspace?.plan || Plan.FREE;
+  const isPaidPlan = currentPlan !== Plan.FREE;
 
   const { data: automations = [], isLoading: isAutomationsLoading } =
     useAutomations(workspaceId);
@@ -84,6 +89,62 @@ export function AutomationsPage(): JSX.Element {
     return (
       <div className="flex h-full items-center justify-center">
         <Loader2 className="h-8 w-8 animate-spin text-brand-500" />
+      </div>
+    );
+  }
+
+  // Show upgrade prompt for free users
+  if (!isPaidPlan) {
+    return (
+      <div className="p-4 sm:p-6 lg:p-8">
+        <div className="mx-auto max-w-2xl">
+          <Card className="p-8 text-center">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-brand-100">
+              <Lock className="h-8 w-8 text-brand-600" />
+            </div>
+            <h1 className="mt-6 text-2xl font-bold text-slate-900">
+              Automatisations
+            </h1>
+            <p className="mt-3 text-slate-600">
+              Les automatisations permettent de créer des tâches automatiquement
+              en fonction de l&apos;activité de vos deals. Cette fonctionnalité est
+              disponible avec les plans Solo et Team.
+            </p>
+
+            <div className="mt-8 rounded-lg bg-slate-50 p-6">
+              <h3 className="font-semibold text-slate-900">
+                Exemples d&apos;automatisations
+              </h3>
+              <ul className="mt-3 space-y-2 text-left text-sm text-slate-600">
+                <li className="flex items-start gap-2">
+                  <Zap className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-500" />
+                  <span>
+                    Créer une tâche de relance quand un deal est inactif depuis 7 jours
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Zap className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-500" />
+                  <span>
+                    Déclencher une action quand un deal passe en négociation
+                  </span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Zap className="mt-0.5 h-4 w-4 flex-shrink-0 text-brand-500" />
+                  <span>
+                    Créer une tâche d&apos;onboarding à la création d&apos;un nouveau deal
+                  </span>
+                </li>
+              </ul>
+            </div>
+
+            <Link to="/app/settings" className="mt-8 inline-block">
+              <Button size="lg">
+                <Sparkles className="mr-2 h-4 w-4" />
+                Passer à un plan payant
+              </Button>
+            </Link>
+          </Card>
+        </div>
       </div>
     );
   }

@@ -70,18 +70,18 @@ export const PLAN_CONFIG = {
     name: 'Gratuit',
     price: 0,
     contactLimit: 10,
-    features: ['10 contacts max', '1 utilisateur', 'Pipeline personnalisable', 'Support email'],
+    features: ['10 contacts max', '1 utilisateur', 'Pipeline personnalisable', 'Gestion des tâches', 'Support email'],
   },
   SOLO: {
     name: 'Solo',
     price: 10,
     contactLimit: null,
-    features: ['Contacts illimités', '1 utilisateur', 'Pipeline personnalisable', 'Support prioritaire', 'Export CSV'],
+    features: ['Contacts illimités', '1 utilisateur', 'Automatisations', 'Export CSV', 'Support prioritaire'],
   },
   TEAM: {
     name: 'Team',
     price: 20,
     contactLimit: null,
-    features: ['Contacts illimités', '3 utilisateurs', 'Pipeline personnalisable', 'Support prioritaire', 'Export CSV', 'Rapports avancés'],
+    features: ['Contacts illimités', '3 utilisateurs', 'Automatisations', 'Export CSV', 'Rapports avancés', 'Support prioritaire'],
   },
 } as const;
