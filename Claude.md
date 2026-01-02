@@ -473,11 +473,74 @@ NODE_ENV="development"
 # VITE_API_URL only needed if not using proxy
 ```
 
+## CSV Import Feature
+
+The contact import feature allows users to bulk import contacts from CSV files.
+
+### Backend Implementation
+- **Endpoint**: `POST /workspaces/:wid/contacts/import` (multipart form-data)
+- **Use Case**: `ImportContactsUseCase` in `apps/api/src/modules/contact/application/commands/`
+- **Library**: papaparse for CSV parsing
+- **Limits**: 5MB max file size, respects plan contact limits
+
+### Column Detection
+The import auto-detects columns with French/English header variations:
+- **Name**: nom, name, prénom, firstname, contact, etc.
+- **Email**: email, mail, courriel, e-mail
+- **Phone**: phone, telephone, téléphone, mobile, portable
+- **Company**: company, entreprise, société, organization
+- **Notes**: notes, commentaire, description
+- **Tags**: tags, labels, categories (comma or semicolon separated)
+
+### Response Format
+```typescript
+{
+  imported: ImportedContact[];  // Successfully imported contacts
+  errors: ImportError[];        // Failed rows with error details
+  total: number;                // Total rows in CSV
+}
+```
+
+### Frontend Components
+- **ImportModal** (`apps/web/src/components/contacts/import-modal.tsx`): Multi-step modal with:
+  - Drag & drop file upload zone
+  - CSV preview with first 5 rows
+  - Import progress and results
+  - Error details per failed row
+
+## Responsive Design
+
+The app is fully responsive with mobile-first considerations:
+
+### Layout (`app-layout.tsx`)
+- **Desktop**: Fixed 256px sidebar with navigation
+- **Mobile**: Hamburger menu with slide-out sidebar overlay
+- Mobile header with logo and menu toggle
+
+### Page Patterns
+- Responsive padding: `p-4 sm:p-6 lg:p-8`
+- Header buttons stack vertically on mobile with shorter labels
+- Cards/tables adapt to screen size
+
+### Contacts Page
+- **Desktop**: Table view with sortable columns
+- **Mobile**: Card-based view with touch-friendly tap targets
+- Progressive column hiding (Tags hidden on md, Company on sm)
+
+### Pipeline (Deals) Page
+- Horizontal scroll for Kanban columns on mobile
+- Visual scroll indicator (gradient fade on right edge)
+- Narrower columns on mobile (256px vs 288px)
+
+### UI Components
+- `Dropdown` component supports `position="top"` for bottom-positioned triggers
+- Modals are responsive with `sm:max-w-*` constraints
+
 ## Important Reminders
 
 1. **Keep it simple** - We're building a minimalist CRM, resist feature creep
 2. **French UX** - All user-facing text in French, use proper typography (« », espaces insécables)
-3. **Mobile-first** - Responsive design, touch-friendly
+3. **Responsive design** - Desktop-first but usable on mobile, touch-friendly
 4. **Performance** - Lazy loading, optimistic updates, skeleton loaders
 5. **Security** - Validate all inputs, sanitize outputs, proper CORS, rate limiting
 6. **Accessibility** - Semantic HTML, ARIA when needed, keyboard navigation

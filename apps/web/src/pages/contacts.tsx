@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 
 import { ContactModal } from '@/components/contacts/contact-modal';
+import { ImportModal } from '@/components/contacts/import-modal';
 import { useCurrentWorkspace } from '@/hooks/use-workspace';
 import { useContacts, useContactTags, type ContactFilters } from '@/services/contacts';
 
@@ -14,6 +15,7 @@ export function ContactsPage(): JSX.Element {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isImportModalOpen, setIsImportModalOpen] = useState(false);
 
   const filters: ContactFilters = useMemo(
     () => ({
@@ -54,7 +56,12 @@ export function ContactsPage(): JSX.Element {
           </p>
         </div>
         <div className="flex gap-2 sm:gap-3">
-          <Button variant="outline" size="sm" className="flex-1 sm:flex-none sm:size-default">
+          <Button
+            variant="outline"
+            size="sm"
+            className="flex-1 sm:flex-none sm:size-default"
+            onClick={() => setIsImportModalOpen(true)}
+          >
             <Upload className="mr-2 h-4 w-4" />
             <span className="hidden sm:inline">Importer</span>
             <span className="sm:hidden">Import</span>
@@ -254,6 +261,13 @@ export function ContactsPage(): JSX.Element {
       <ContactModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
+        workspaceId={workspaceId}
+      />
+
+      {/* Import Modal */}
+      <ImportModal
+        isOpen={isImportModalOpen}
+        onClose={() => setIsImportModalOpen(false)}
         workspaceId={workspaceId}
       />
     </div>

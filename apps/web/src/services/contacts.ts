@@ -98,6 +98,40 @@ async function deleteContact(
   await apiClient.delete(`/workspaces/${workspaceId}/contacts/${contactId}`);
 }
 
+// Import types
+export interface ImportedContact {
+  id: string;
+  name: string;
+  email: string | null;
+  phone: string | null;
+  company: string | null;
+  notes: string | null;
+  tags: string[];
+}
+
+export interface ImportError {
+  row: number;
+  data: Record<string, string>;
+  error: string;
+}
+
+export interface ImportResult {
+  imported: ImportedContact[];
+  errors: ImportError[];
+  total: number;
+}
+
+async function importContacts(
+  workspaceId: string,
+  file: File
+): Promise<ImportResult> {
+  const response = await apiClient.upload<ImportResult>(
+    `/workspaces/${workspaceId}/contacts/import`,
+    file
+  );
+  return response.data;
+}
+
 // Hooks
 export function useContacts(workspaceId: string, filters: ContactFilters = {}) {
   return useQuery({
@@ -289,6 +323,18 @@ export function useDeleteContact(workspaceId: string) {
       });
     },
     onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: contactKeys.lists() });
+      queryClient.invalidateQueries({ queryKey: contactKeys.tags(workspaceId) });
+    },
+  });
+}
+
+export function useImportContacts(workspaceId: string) {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (file: File) => importContacts(workspaceId, file),
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: contactKeys.lists() });
       queryClient.invalidateQueries({ queryKey: contactKeys.tags(workspaceId) });
     },

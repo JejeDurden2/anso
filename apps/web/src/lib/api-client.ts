@@ -125,6 +125,33 @@ export const apiClient = {
   delete<T>(endpoint: string, options?: RequestOptions): Promise<ApiResponse<T>> {
     return request<T>(endpoint, { ...options, method: 'DELETE' });
   },
+
+  async upload<T>(endpoint: string, file: File, fieldName = 'file'): Promise<ApiResponse<T>> {
+    const formData = new FormData();
+    formData.append(fieldName, file);
+
+    const url = `${API_BASE_URL}${endpoint}`;
+
+    const response = await fetch(url, {
+      method: 'POST',
+      body: formData,
+      credentials: 'include',
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      const errorData = data as ApiErrorResponse;
+      throw new ApiError(
+        errorData.error.code,
+        errorData.error.message,
+        response.status,
+        errorData.error.details
+      );
+    }
+
+    return data as ApiResponse<T>;
+  },
 };
 
 export { ApiError };

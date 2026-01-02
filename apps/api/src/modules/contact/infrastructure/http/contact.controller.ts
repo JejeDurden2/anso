@@ -8,14 +8,18 @@ import {
   Param,
   Query,
   UseGuards,
+  UseInterceptors,
+  UploadedFile,
   BadRequestException,
   NotFoundException,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 import { JwtAuthGuard, WorkspaceGuard } from '@/shared/infrastructure/guards';
 
 import { CreateContactUseCase } from '../../application/commands/create-contact.use-case';
 import { DeleteContactUseCase } from '../../application/commands/delete-contact.use-case';
+import { ImportContactsUseCase } from '../../application/commands/import-contacts.use-case';
 import { UpdateContactUseCase } from '../../application/commands/update-contact.use-case';
 import { GetContactByIdUseCase } from '../../application/queries/get-contact-by-id.use-case';
 import { GetContactsUseCase } from '../../application/queries/get-contacts.use-case';
@@ -31,7 +35,8 @@ export class ContactController {
     private readonly getContactByIdUseCase: GetContactByIdUseCase,
     private readonly createContactUseCase: CreateContactUseCase,
     private readonly updateContactUseCase: UpdateContactUseCase,
-    private readonly deleteContactUseCase: DeleteContactUseCase
+    private readonly deleteContactUseCase: DeleteContactUseCase,
+    private readonly importContactsUseCase: ImportContactsUseCase
   ) {}
 
   @Get()
@@ -96,6 +101,51 @@ export class ContactController {
     const result = await this.createContactUseCase.execute({
       workspaceId,
       ...dto,
+    });
+
+    if (result.isFailure) {
+      throw new BadRequestException(result.error);
+    }
+
+    return {
+      success: true,
+      data: result.value,
+    };
+  }
+
+  @Post('import')
+  @UseInterceptors(
+    FileInterceptor('file', {
+      limits: {
+        fileSize: 5 * 1024 * 1024, // 5MB max
+      },
+      fileFilter: (_req, file, callback) => {
+        if (!file.originalname.match(/\.(csv)$/i)) {
+          return callback(new BadRequestException('Seuls les fichiers CSV sont acceptés'), false);
+        }
+        callback(null, true);
+      },
+    })
+  )
+  async importContacts(
+    @Param('wid') workspaceId: string,
+    @UploadedFile() file: Express.Multer.File
+  ): Promise<{
+    success: boolean;
+    data: {
+      imported: unknown[];
+      errors: unknown[];
+      total: number;
+    };
+  }> {
+    if (!file) {
+      throw new BadRequestException('Aucun fichier fourni');
+    }
+
+    const csvContent = file.buffer.toString('utf-8');
+    const result = await this.importContactsUseCase.execute({
+      workspaceId,
+      csvContent,
     });
 
     if (result.isFailure) {
