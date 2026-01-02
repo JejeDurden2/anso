@@ -11,10 +11,15 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     configService: ConfigService,
     private readonly authService: AuthService
   ) {
+    const apiUrl = configService.get<string>('API_URL');
+    const frontendUrl = configService.get<string>('FRONTEND_URL', 'http://localhost:5173');
+    // In production, use API_URL for callback; in dev, use frontend URL (Vite proxies /api)
+    const baseUrl = apiUrl || frontendUrl;
+
     super({
       clientID: configService.get<string>('GOOGLE_CLIENT_ID'),
       clientSecret: configService.get<string>('GOOGLE_CLIENT_SECRET'),
-      callbackURL: `${configService.get<string>('FRONTEND_URL', 'http://localhost:5173')}/api/auth/google/callback`,
+      callbackURL: `${baseUrl}/api/auth/google/callback`,
       scope: ['email', 'profile'],
     });
   }
