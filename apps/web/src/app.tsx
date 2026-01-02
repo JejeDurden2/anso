@@ -5,6 +5,7 @@ import { AppLayout } from '@/components/layout/app-layout';
 import { AuthProvider } from '@/contexts/auth-context';
 import { ContactDetailPage } from '@/pages/contact-detail';
 import { ContactsPage } from '@/pages/contacts';
+import { DashboardPage } from '@/pages/dashboard';
 import { DealsPage } from '@/pages/deals';
 import { LandingPage } from '@/pages/landing';
 import { LoginPage } from '@/pages/login';
@@ -28,7 +29,8 @@ export function App(): JSX.Element {
               </ProtectedRoute>
             }
           >
-            <Route index element={<Navigate to="/app/contacts" replace />} />
+            <Route index element={<Navigate to="/app/dashboard" replace />} />
+            <Route path="dashboard" element={<DashboardPage />} />
             <Route path="contacts" element={<ContactsPage />} />
             <Route path="contacts/:id" element={<ContactDetailPage />} />
             <Route path="deals" element={<DealsPage />} />

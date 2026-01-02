@@ -1,5 +1,5 @@
 import { Avatar, Button, Dropdown, DropdownItem } from '@anso/ui';
-import { Users, Kanban, Settings, LogOut, Menu, X, PanelLeftClose, PanelLeft } from 'lucide-react';
+import { LayoutDashboard, Users, Kanban, Settings, LogOut, Menu, X, PanelLeftClose, PanelLeft } from 'lucide-react';
 import { useState } from 'react';
 import { Outlet, NavLink, Link } from 'react-router-dom';
 
@@ -7,6 +7,7 @@ import { useAuth } from '@/contexts/auth-context';
 import { cn } from '@/lib/utils';
 
 const navigation = [
+  { name: 'Tableau de bord', href: '/app/dashboard', icon: LayoutDashboard },
   { name: 'Contacts', href: '/app/contacts', icon: Users },
   { name: 'Pipeline', href: '/app/deals', icon: Kanban },
   { name: 'Paramètres', href: '/app/settings', icon: Settings },
