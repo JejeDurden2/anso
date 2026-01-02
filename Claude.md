@@ -417,13 +417,6 @@ export class MyUseCase {
 }
 ```
 
-### Environment Variables
-```bash
-OTEL_EXPORTER_OTLP_ENDPOINT=https://your-collector.railway.app  # Required to enable tracing
-OTEL_EXPORTER_OTLP_HEADERS='{"Authorization":"Bearer xxx"}'     # Optional auth headers
-OTEL_SERVICE_NAME=anso-api                                       # Service name (default: anso-api)
-```
-
 ## Billing (Stripe)
 
 Stripe integration for subscription management in `apps/api/src/modules/billing/`.
@@ -433,19 +426,51 @@ Stripe integration for subscription management in `apps/api/src/modules/billing/
 - **SOLO**: Unlimited contacts, 1 user, 10€/month
 - **TEAM**: Unlimited contacts, 3 users, 20€/month
 
-### Environment Variables
-```bash
-STRIPE_SECRET_KEY=sk_...
-STRIPE_WEBHOOK_SECRET=whsec_...
-STRIPE_SOLO_PRICE_ID=price_...
-STRIPE_TEAM_PRICE_ID=price_...
-```
-
 ### API Endpoints
 ```
 POST   /workspaces/:wid/billing/checkout  # Create Stripe checkout session
 POST   /workspaces/:wid/billing/portal    # Create Stripe customer portal session
 POST   /billing/webhook                    # Stripe webhook handler
+```
+
+## Environment Variables
+
+See `.env.example` files in each app for full documentation.
+
+### Backend (`apps/api/.env`)
+```bash
+# Database (Neon PostgreSQL)
+DATABASE_URL="postgresql://..."          # With pgbouncer for connection pooling
+DIRECT_URL="postgresql://..."            # Direct connection for migrations
+
+# Google OAuth
+GOOGLE_CLIENT_ID="xxx.apps.googleusercontent.com"
+GOOGLE_CLIENT_SECRET="xxx"
+
+# JWT Authentication
+JWT_SECRET="your-secret-key"
+JWT_EXPIRES_IN="7d"
+
+# Stripe Billing
+STRIPE_SECRET_KEY="sk_..."
+STRIPE_WEBHOOK_SECRET="whsec_..."
+STRIPE_SOLO_PRICE_ID="price_..."
+STRIPE_TEAM_PRICE_ID="price_..."
+
+# OpenTelemetry (optional)
+OTEL_EXPORTER_OTLP_ENDPOINT="https://..."
+OTEL_SERVICE_NAME="anso-api"
+
+# Application
+PORT=3000
+FRONTEND_URL="http://localhost:5173"
+NODE_ENV="development"
+```
+
+### Frontend (`apps/web/.env`)
+```bash
+# No required variables - uses /api proxy in dev
+# VITE_API_URL only needed if not using proxy
 ```
 
 ## Important Reminders
