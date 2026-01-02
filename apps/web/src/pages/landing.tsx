@@ -49,9 +49,9 @@ export function LandingPage(): JSX.Element {
               Simple, rapide, efficace
             </div>
             <h1 id="hero-heading" className="text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
-              Le{' '}
+              Le CRM{' '}
               <span className="bg-gradient-to-r from-brand-500 to-brand-600 bg-clip-text text-transparent">
-                CRM simple
+                minimaliste
               </span>
               {' '}pour freelances et TPE
             </h1>
