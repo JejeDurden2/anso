@@ -1,7 +1,6 @@
 import { Plan } from '@anso/types';
-import { Button, Card, CardContent, CardHeader, Input, Avatar } from '@anso/ui';
+import { Button, Card, CardContent, CardHeader, Avatar } from '@anso/ui';
 import { Check, Loader2, CreditCard, Zap } from 'lucide-react';
-import { useState } from 'react';
 
 
 import { useAuth } from '@/contexts/auth-context';
@@ -104,7 +103,6 @@ function PlanCard({
 export function SettingsPage(): JSX.Element {
   const { user } = useAuth();
   const { workspace, workspaceId } = useCurrentWorkspace();
-  const [workspaceName, setWorkspaceName] = useState(workspace?.name || '');
 
   const checkoutMutation = useCreateCheckoutSession(workspaceId);
   const portalMutation = useCreatePortalSession(workspaceId);
@@ -146,30 +144,6 @@ export function SettingsPage(): JSX.Element {
                 <p className="text-sm text-slate-500">{user?.email}</p>
               </div>
             </div>
-          </CardContent>
-        </Card>
-
-        {/* Workspace */}
-        <Card>
-          <CardHeader>
-            <h2 className="text-lg font-semibold text-slate-900">Espace de travail</h2>
-          </CardHeader>
-          <CardContent>
-            <form className="space-y-4">
-              <div>
-                <label htmlFor="workspace-name" className="block text-sm font-medium text-slate-700">
-                  Nom de l&apos;espace
-                </label>
-                <Input
-                  id="workspace-name"
-                  placeholder="Mon entreprise"
-                  value={workspaceName}
-                  onChange={(e) => setWorkspaceName(e.target.value)}
-                  className="mt-1"
-                />
-              </div>
-              <Button>Enregistrer</Button>
-            </form>
           </CardContent>
         </Card>
 

@@ -6,6 +6,7 @@ import {
   ModalFooter,
   Button,
   Input,
+  CurrencyInput,
   Label,
 } from '@anso/ui';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -166,19 +167,20 @@ export function DealModal({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="value">Montant (€)</Label>
-            <Input
-              id="value"
-              type="number"
-              min="0"
-              step="0.01"
-              placeholder="10000"
-              {...register('value')}
-              aria-invalid={!!errors.value}
+            <Label htmlFor="value">Montant</Label>
+            <Controller
+              name="value"
+              control={control}
+              render={({ field }) => (
+                <CurrencyInput
+                  id="value"
+                  placeholder="10 000"
+                  value={field.value}
+                  onChange={field.onChange}
+                  error={errors.value?.message}
+                />
+              )}
             />
-            {errors.value && (
-              <p className="text-sm text-red-500">{errors.value.message}</p>
-            )}
           </div>
 
           <div className="space-y-2">

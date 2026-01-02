@@ -12,8 +12,9 @@ import {
   type DragOverEvent,
 } from '@dnd-kit/core';
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useRef, useCallback, useEffect } from 'react';
 
+import { cn } from '@/lib/utils';
 import { useMoveDeal, type DealWithRelations } from '@/services/deals';
 
 import { DealCardOverlay } from './deal-card';
@@ -35,7 +36,78 @@ export function KanbanBoard({
   onQuickAdd,
 }: KanbanBoardProps): JSX.Element {
   const [activeId, setActiveId] = useState<string | null>(null);
+  const [isDragScrolling, setIsDragScrolling] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const dragStartRef = useRef<{ x: number; scrollLeft: number } | null>(null);
   const moveDeal = useMoveDeal(workspaceId);
+
+  // Horizontal scroll with mouse wheel
+  const handleWheel = useCallback((e: WheelEvent) => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    // Only handle horizontal scroll when not scrolling vertically
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX) && e.deltaX === 0) {
+      e.preventDefault();
+      container.scrollLeft += e.deltaY;
+    }
+  }, []);
+
+  // Drag to scroll functionality
+  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+    // Only activate on middle click or when holding shift
+    if (e.button !== 1 && !e.shiftKey) return;
+
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    e.preventDefault();
+    setIsDragScrolling(true);
+    dragStartRef.current = {
+      x: e.pageX - container.offsetLeft,
+      scrollLeft: container.scrollLeft,
+    };
+  }, []);
+
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    if (!isDragScrolling || !dragStartRef.current) return;
+
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    e.preventDefault();
+    const x = e.pageX - container.offsetLeft;
+    const walk = (x - dragStartRef.current.x) * 1.5; // Scroll speed multiplier
+    container.scrollLeft = dragStartRef.current.scrollLeft - walk;
+  }, [isDragScrolling]);
+
+  const handleMouseUp = useCallback(() => {
+    setIsDragScrolling(false);
+    dragStartRef.current = null;
+  }, []);
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    container.addEventListener('wheel', handleWheel, { passive: false });
+
+    return () => {
+      container.removeEventListener('wheel', handleWheel);
+    };
+  }, [handleWheel]);
+
+  useEffect(() => {
+    if (isDragScrolling) {
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', handleMouseUp);
+    }
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isDragScrolling, handleMouseMove, handleMouseUp]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -117,7 +189,22 @@ export function KanbanBoard({
       onDragOver={handleDragOver}
       onDragEnd={handleDragEnd}
     >
-      <div className="flex flex-1 gap-4 overflow-x-auto pb-4">
+      <div
+        ref={scrollContainerRef}
+        onMouseDown={handleMouseDown}
+        className={cn(
+          // Base layout
+          'flex h-full gap-4 overflow-x-auto pb-4',
+          // Hide scrollbar visually but keep functionality
+          'scrollbar-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none]',
+          // Scroll snap on mobile
+          'snap-x snap-mandatory sm:snap-none',
+          // Smooth scrolling
+          'scroll-smooth',
+          // Cursor states for drag-to-scroll
+          isDragScrolling ? 'cursor-grabbing select-none' : ''
+        )}
+      >
         {stages.map((stage) => (
           <KanbanColumn
             key={stage.id}

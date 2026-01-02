@@ -1,7 +1,7 @@
 import { Avatar, Button, Dropdown, DropdownItem } from '@anso/ui';
-import { Users, Kanban, Settings, LogOut, Menu, X } from 'lucide-react';
+import { Users, Kanban, Settings, LogOut, Menu, X, PanelLeftClose, PanelLeft } from 'lucide-react';
 import { useState } from 'react';
-import { Outlet, NavLink } from 'react-router-dom';
+import { Outlet, NavLink, Link } from 'react-router-dom';
 
 import { useAuth } from '@/contexts/auth-context';
 import { cn } from '@/lib/utils';
@@ -15,14 +15,19 @@ const navigation = [
 export function AppLayout(): JSX.Element {
   const { user, logout } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   const closeSidebar = (): void => setSidebarOpen(false);
 
   const SidebarContent = (
     <>
       {/* Logo */}
-      <div className="flex h-16 items-center justify-between border-b border-slate-200/80 px-6">
-        <div className="flex items-center gap-2">
+      <div className="flex h-16 items-center justify-between border-b border-slate-200/80 px-4">
+        <Link
+          to="/app"
+          className="flex items-center gap-2 rounded-lg transition-colors hover:opacity-80"
+          onClick={closeSidebar}
+        >
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500 to-brand-600 shadow-md shadow-brand-500/20">
             <svg className="h-5 w-5 text-white" viewBox="0 0 32 32" fill="none">
               <path
@@ -34,8 +39,10 @@ export function AppLayout(): JSX.Element {
               />
             </svg>
           </div>
-          <span className="text-lg font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">Anso</span>
-        </div>
+          {!sidebarCollapsed && (
+            <span className="text-lg font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent">Anso</span>
+          )}
+        </Link>
         {/* Mobile close button */}
         <button
           onClick={closeSidebar}
@@ -43,42 +50,64 @@ export function AppLayout(): JSX.Element {
         >
           <X className="h-5 w-5" />
         </button>
+        {/* Desktop collapse button */}
+        <button
+          onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+          className="hidden rounded-lg p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-600 lg:block"
+          title={sidebarCollapsed ? 'Agrandir' : 'Réduire'}
+        >
+          {sidebarCollapsed ? (
+            <PanelLeft className="h-4 w-4" />
+          ) : (
+            <PanelLeftClose className="h-4 w-4" />
+          )}
+        </button>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 space-y-1 p-4">
+      <nav className={cn('flex-1 space-y-1', sidebarCollapsed ? 'p-2' : 'p-4')}>
         {navigation.map((item) => (
           <NavLink
             key={item.name}
             to={item.href}
             onClick={closeSidebar}
+            title={sidebarCollapsed ? item.name : undefined}
             className={({ isActive }) =>
               cn(
-                'flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200',
+                'flex items-center gap-3 rounded-xl text-sm font-medium transition-all duration-200',
+                sidebarCollapsed ? 'justify-center px-2 py-2.5' : 'px-3 py-2.5',
                 isActive
                   ? 'bg-gradient-to-r from-brand-50 to-brand-100/50 text-brand-700 shadow-sm'
                   : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 hover:translate-x-1'
               )
             }
           >
-            <item.icon className="h-5 w-5" />
-            {item.name}
+            <item.icon className="h-5 w-5 flex-shrink-0" />
+            {!sidebarCollapsed && item.name}
           </NavLink>
         ))}
       </nav>
 
       {/* User menu */}
-      <div className="border-t border-slate-200/80 p-4">
+      <div className={cn('border-t border-slate-200/80', sidebarCollapsed ? 'p-2' : 'p-4')}>
         <Dropdown
           trigger={
-            <button className="flex w-full items-center gap-3 rounded-xl p-2 text-left transition-all duration-200 hover:bg-slate-100">
+            <button
+              className={cn(
+                'flex items-center rounded-xl transition-all duration-200 hover:bg-slate-100',
+                sidebarCollapsed ? 'w-full justify-center p-2' : 'w-full gap-3 p-2 text-left'
+              )}
+              title={sidebarCollapsed ? user?.name || user?.email : undefined}
+            >
               <Avatar src={user?.avatarUrl} name={user?.name || user?.email} size="sm" />
-              <div className="min-w-0 flex-1">
-                <p className="truncate text-sm font-medium text-slate-900">
-                  {user?.name || 'Utilisateur'}
-                </p>
-                <p className="truncate text-xs text-slate-500">{user?.email}</p>
-              </div>
+              {!sidebarCollapsed && (
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm font-medium text-slate-900">
+                    {user?.name || 'Utilisateur'}
+                  </p>
+                  <p className="truncate text-xs text-slate-500">{user?.email}</p>
+                </div>
+              )}
             </button>
           }
           align="left"
@@ -104,7 +133,12 @@ export function AppLayout(): JSX.Element {
       )}
 
       {/* Sidebar - Desktop */}
-      <aside className="hidden w-64 flex-col border-r border-slate-200/80 bg-white/80 backdrop-blur-xl lg:flex">
+      <aside
+        className={cn(
+          'hidden flex-col border-r border-slate-200/80 bg-white/80 backdrop-blur-xl transition-all duration-300 lg:flex',
+          sidebarCollapsed ? 'w-16' : 'w-64'
+        )}
+      >
         {SidebarContent}
       </aside>
 

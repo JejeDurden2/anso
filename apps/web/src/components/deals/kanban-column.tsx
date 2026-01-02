@@ -5,6 +5,7 @@ import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { Plus } from 'lucide-react';
 import { useState } from 'react';
 
+import { cn } from '@/lib/utils';
 import type { DealWithRelations } from '@/services/deals';
 
 import { DealCard } from './deal-card';
@@ -57,40 +58,53 @@ export function KanbanColumn({
   const totalValue = deals.reduce((sum, deal) => sum + (deal.value || 0), 0);
 
   return (
-    <div className="flex w-64 flex-shrink-0 flex-col rounded-lg bg-slate-100/50 sm:w-72">
-      {/* Column header */}
-      <div className="flex items-center gap-2 rounded-t-lg border-b border-slate-200 bg-white px-4 py-3">
-        <div
-          className="h-3 w-3 rounded-full ring-2 ring-white"
-          style={{ backgroundColor: stage.color }}
-        />
-        <h2 className="font-semibold text-slate-900">{stage.name}</h2>
-        <span className="ml-auto flex items-center gap-2 text-sm text-slate-500">
-          <span className="rounded-full bg-slate-100 px-2 py-0.5 font-medium">
-            {deals.length}
-          </span>
-        </span>
-      </div>
-
-      {/* Total value */}
-      {totalValue > 0 && (
-        <div className="border-b border-slate-200 bg-white px-4 py-2 text-sm">
-          <span className="font-semibold text-brand-600">
-            {new Intl.NumberFormat('fr-FR', {
-              style: 'currency',
-              currency: 'EUR',
-              maximumFractionDigits: 0,
-            }).format(totalValue)}
+    <div
+      className={cn(
+        'flex w-64 flex-shrink-0 flex-col rounded-xl bg-slate-100/50 sm:w-72',
+        // Scroll snap target on mobile
+        'snap-start'
+      )}
+    >
+      {/* Column header - sticky on vertical scroll */}
+      <div className="sticky top-0 z-10 rounded-t-xl bg-white shadow-sm">
+        {/* Stage name and count */}
+        <div className="flex items-center gap-2 px-4 py-3">
+          <div
+            className="h-3 w-3 rounded-full shadow-sm"
+            style={{ backgroundColor: stage.color }}
+          />
+          <h2 className="font-semibold text-slate-900">{stage.name}</h2>
+          <span className="ml-auto">
+            <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-600">
+              {deals.length}
+            </span>
           </span>
         </div>
-      )}
+
+        {/* Total value - more prominent */}
+        <div className="border-t border-slate-100 px-4 py-2">
+          <div className="flex items-baseline gap-1">
+            <span className="text-lg font-bold text-slate-900">
+              {new Intl.NumberFormat('fr-FR', {
+                style: 'currency',
+                currency: 'EUR',
+                maximumFractionDigits: 0,
+              }).format(totalValue)}
+            </span>
+            {totalValue > 0 && (
+              <span className="text-xs text-slate-400">total</span>
+            )}
+          </div>
+        </div>
+      </div>
 
       {/* Cards container */}
       <div
         ref={setNodeRef}
-        className={`flex min-h-[200px] flex-1 flex-col gap-2 p-2 transition-colors ${
-          isOver ? 'bg-brand-50' : ''
-        }`}
+        className={cn(
+          'flex min-h-[200px] flex-1 flex-col gap-2 p-2 transition-colors',
+          isOver && 'bg-brand-50/50'
+        )}
       >
         <SortableContext items={deals.map((d) => d.id)} strategy={verticalListSortingStrategy}>
           {deals.map((deal) => (
@@ -105,14 +119,14 @@ export function KanbanColumn({
 
         {/* Empty state */}
         {deals.length === 0 && !isAdding && (
-          <div className="flex flex-1 items-center justify-center rounded-lg border-2 border-dashed border-slate-200 p-4 text-center text-sm text-slate-400">
+          <div className="flex flex-1 items-center justify-center rounded-lg border-2 border-dashed border-slate-200/80 p-4 text-center text-sm text-slate-400">
             Déposez un deal ici
           </div>
         )}
 
         {/* Quick add form */}
         {isAdding ? (
-          <div className="rounded-lg bg-white p-2 shadow-sm">
+          <div className="rounded-lg bg-white p-2 shadow-sm ring-1 ring-slate-200">
             <Input
               autoFocus
               placeholder="Nom de l'opportunité..."
@@ -140,7 +154,7 @@ export function KanbanColumn({
         ) : (
           <button
             onClick={() => setIsAdding(true)}
-            className="flex w-full items-center justify-center gap-2 rounded-lg py-2 text-sm text-slate-500 transition-colors hover:bg-slate-200 hover:text-slate-700"
+            className="flex w-full items-center justify-center gap-2 rounded-lg py-2 text-sm text-slate-400 transition-colors hover:bg-slate-200/80 hover:text-slate-600"
           >
             <Plus className="h-4 w-4" />
             Ajouter
