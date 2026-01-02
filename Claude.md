@@ -47,6 +47,9 @@ Anso is a minimalist CRM SaaS for French freelancers and small businesses (TPE).
 - Class-validator for DTO validation
 - Class-transformer for serialization
 
+## Database Guidelines
+See [PRISMA.md](./PRISMA.md) for complete Prisma workflow and migration practices.
+
 ### Infrastructure
 - Vercel for frontend deployment
 - Railway for backend
