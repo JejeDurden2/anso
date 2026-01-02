@@ -1,0 +1,124 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id            String            @id @default(cuid())
+  email         String            @unique
+  name          String?
+  avatarUrl     String?
+  googleId      String            @unique
+  workspaces    WorkspaceMember[]
+  refreshTokens RefreshToken[]
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  @@map("users")
+}
+
+model RefreshToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("refresh_tokens")
+}
+
+model Workspace {
+  id                   String            @id @default(cuid())
+  name                 String
+  members              WorkspaceMember[]
+  contacts             Contact[]
+  stages               Stage[]
+  deals                Deal[]
+  plan                 Plan              @default(FREE)
+  stripeCustomerId     String?           @unique
+  stripeSubscriptionId String?
+  createdAt            DateTime          @default(now())
+  updatedAt            DateTime          @updatedAt
+
+  @@map("workspaces")
+}
+
+model WorkspaceMember {
+  id          String    @id @default(cuid())
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  workspaceId String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
+  role        Role      @default(MEMBER)
+
+  @@unique([workspaceId, userId])
+  @@map("workspace_members")
+}
+
+model Contact {
+  id          String    @id @default(cuid())
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  workspaceId String
+  name        String
+  email       String?
+  phone       String?
+  company     String?
+  notes       String?
+  tags        String[]
+  deals       Deal[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([workspaceId])
+  @@map("contacts")
+}
+
+model Stage {
+  id          String    @id @default(cuid())
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  workspaceId String
+  name        String
+  color       String    @default("#64748b")
+  position    Int
+  deals       Deal[]
+
+  @@index([workspaceId])
+  @@map("stages")
+}
+
+model Deal {
+  id          String    @id @default(cuid())
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  workspaceId String
+  contact     Contact?  @relation(fields: [contactId], references: [id], onDelete: SetNull)
+  contactId   String?
+  stage       Stage     @relation(fields: [stageId], references: [id])
+  stageId     String
+  title       String
+  value       Decimal?  @db.Decimal(10, 2)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([workspaceId])
+  @@index([stageId])
+  @@map("deals")
+}
+
+enum Role {
+  OWNER
+  MEMBER
+}
+
+enum Plan {
+  FREE
+  SOLO
+  TEAM
+}
