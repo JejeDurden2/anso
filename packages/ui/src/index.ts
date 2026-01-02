@@ -51,6 +51,7 @@ export {
   TooltipContent,
   TooltipProvider,
 } from './components/tooltip';
+export { Switch, type SwitchProps } from './components/switch';
 
 // Legacy exports for backwards compatibility
 export {

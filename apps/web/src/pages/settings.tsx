@@ -1,7 +1,7 @@
 import { Plan } from '@anso/types';
 import { Button, Card, CardContent, CardHeader, Avatar } from '@anso/ui';
-import { Check, Loader2, CreditCard, Zap } from 'lucide-react';
-
+import { Check, Loader2, CreditCard, Zap, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 import { useAuth } from '@/contexts/auth-context';
 import { useCurrentWorkspace } from '@/hooks/use-workspace';
@@ -194,6 +194,26 @@ export function SettingsPage(): JSX.Element {
                   : 'Une erreur est survenue lors de la création de la session de paiement.'}
               </div>
             )}
+          </CardContent>
+        </Card>
+
+        {/* Automations */}
+        <Card>
+          <CardHeader>
+            <h2 className="text-lg font-semibold text-slate-900">Automatisations</h2>
+          </CardHeader>
+          <CardContent>
+            <p className="text-sm text-slate-600">
+              Configurez des règles pour créer automatiquement des tâches de suivi
+              en fonction de l&apos;activité de vos deals.
+            </p>
+            <Link to="/app/settings/automations">
+              <Button variant="outline" className="mt-4">
+                <Zap className="mr-2 h-4 w-4" />
+                Gérer les automatisations
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
           </CardContent>
         </Card>
 

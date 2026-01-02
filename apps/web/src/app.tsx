@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ProtectedRoute } from '@/components/auth/protected-route';
 import { AppLayout } from '@/components/layout/app-layout';
 import { AuthProvider } from '@/contexts/auth-context';
+import { AutomationsPage } from '@/pages/automations';
 import { ContactDetailPage } from '@/pages/contact-detail';
 import { ContactsPage } from '@/pages/contacts';
 import { DashboardPage } from '@/pages/dashboard';
@@ -35,6 +36,7 @@ export function App(): JSX.Element {
             <Route path="contacts/:id" element={<ContactDetailPage />} />
             <Route path="deals" element={<DealsPage />} />
             <Route path="settings" element={<SettingsPage />} />
+            <Route path="settings/automations" element={<AutomationsPage />} />
           </Route>
 
           {/* Catch all */}

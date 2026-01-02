@@ -123,6 +123,7 @@ src/
 - Destructure props in function signature
 - Colocate component, types, and styles
 - Use `cn()` helper for conditional Tailwind classes
+- **Apostrophes in JSX**: Always escape French apostrophes with `&apos;` in JSX text content (e.g., `l&apos;activité`, `n&apos;a pas`, `d&apos;ensemble`). ESLint enforces this via `react/no-unescaped-entities`.
 
 ```tsx
 // Good

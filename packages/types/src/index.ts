@@ -169,3 +169,104 @@ export interface UpdateWorkspaceInput {
 export interface ReorderStagesInput {
   stages: { id: string; position: number }[];
 }
+
+// Task types
+export type TaskSource = 'manual' | 'automation';
+
+export interface Task {
+  id: string;
+  workspaceId: string;
+  dealId: string;
+  title: string;
+  description?: string;
+  dueDate: Date;
+  completed: boolean;
+  completedAt?: Date;
+  source: TaskSource;
+  automationRuleId?: string;
+  createdAt: Date;
+  updatedAt: Date;
+  deal?: Deal;
+}
+
+export interface CreateTaskInput {
+  dealId: string;
+  title: string;
+  description?: string;
+  dueDate: Date;
+  source?: TaskSource;
+  automationRuleId?: string;
+}
+
+export interface UpdateTaskInput {
+  title?: string;
+  description?: string;
+  dueDate?: Date;
+  completed?: boolean;
+}
+
+// Automation types
+export type AutomationTriggerType = 'deal_stale' | 'deal_stage_changed' | 'deal_created';
+export type AutomationActionType = 'create_task';
+
+export interface DealStaleTriggerConfig {
+  staleDays: number;
+}
+
+export interface DealStageChangedTriggerConfig {
+  fromStageId?: string;
+  toStageId: string;
+}
+
+export interface DealCreatedTriggerConfig {
+  stageId?: string;
+}
+
+export type AutomationTriggerConfig =
+  | DealStaleTriggerConfig
+  | DealStageChangedTriggerConfig
+  | DealCreatedTriggerConfig;
+
+export interface AutomationTrigger {
+  type: AutomationTriggerType;
+  config: AutomationTriggerConfig;
+}
+
+export interface CreateTaskActionConfig {
+  taskTitle: string;
+  taskDescription?: string;
+  dueDaysFromNow: number;
+}
+
+export interface AutomationAction {
+  type: AutomationActionType;
+  config: CreateTaskActionConfig;
+}
+
+export interface AutomationRule {
+  id: string;
+  workspaceId: string;
+  name: string;
+  description?: string;
+  enabled: boolean;
+  trigger: AutomationTrigger;
+  action: AutomationAction;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface CreateAutomationRuleInput {
+  name: string;
+  description?: string;
+  enabled?: boolean;
+  trigger: AutomationTrigger;
+  action: AutomationAction;
+}
+
+export interface UpdateAutomationRuleInput {
+  name?: string;
+  description?: string;
+  enabled?: boolean;
+  trigger?: AutomationTrigger;
+  action?: AutomationAction;
+}

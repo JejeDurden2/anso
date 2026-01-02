@@ -7,8 +7,10 @@ import {
   ActivityFeed,
   StaleDealsTable,
 } from '@/components/dashboard';
+import { TasksPanel } from '@/components/tasks';
 import { useCurrentWorkspace } from '@/hooks/use-workspace';
 import { useDashboardData } from '@/services/dashboard';
+import { useDeals } from '@/services/deals';
 
 // Format currency
 function formatCurrency(value: number): string {
@@ -45,6 +47,8 @@ export function DashboardPage(): JSX.Element {
     isLoading: isDataLoading,
   } = useDashboardData(workspaceId);
 
+  const { data: deals = [], isLoading: isDealsLoading } = useDeals(workspaceId);
+
   const isLoading = isWorkspaceLoading || isDataLoading;
 
   if (isLoading) {
@@ -63,7 +67,7 @@ export function DashboardPage(): JSX.Element {
           Tableau de bord
         </h1>
         <p className="mt-1 text-sm text-slate-500">
-          Vue d'ensemble de votre activité commerciale
+          Vue d&apos;ensemble de votre activité commerciale
         </p>
       </div>
 
@@ -115,9 +119,14 @@ export function DashboardPage(): JSX.Element {
         <RevenueTrend data={revenueTrend} />
       </div>
 
-      {/* Activity & Stale Deals Row */}
+      {/* Tasks & Activity Row */}
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
+        <TasksPanel deals={deals} isLoading={isDealsLoading} />
         <ActivityFeed activities={activities} />
+      </div>
+
+      {/* Stale Deals */}
+      <div className="mt-6">
         <StaleDealsTable deals={staleDeals} />
       </div>
     </div>

@@ -62,7 +62,7 @@ export function StaleDealsTable({
             Tout est à jour !
           </p>
           <p className="mt-1 text-sm text-slate-500">
-            Aucun deal n'attend de suivi
+            Aucun deal n&apos;attend de suivi
           </p>
         </div>
       </Card>
