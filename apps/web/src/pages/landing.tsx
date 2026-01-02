@@ -7,11 +7,11 @@ export function LandingPage(): JSX.Element {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="fixed top-0 z-50 w-full border-b border-slate-200/80 bg-white/80 backdrop-blur-sm">
+      <header className="fixed top-0 z-50 w-full border-b border-slate-200/80 bg-white/80 backdrop-blur-sm" role="banner">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2" aria-label="Anso - Accueil">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-500">
-              <svg className="h-5 w-5 text-white" viewBox="0 0 32 32" fill="none">
+              <svg className="h-5 w-5 text-white" viewBox="0 0 32 32" fill="none" aria-hidden="true">
                 <path
                   d="M8 22L16 10L24 22H8Z"
                   stroke="currentColor"
@@ -22,8 +22,8 @@ export function LandingPage(): JSX.Element {
               </svg>
             </div>
             <span className="text-xl font-semibold text-slate-900">Anso</span>
-          </div>
-          <nav className="hidden items-center gap-8 md:flex">
+          </Link>
+          <nav className="hidden items-center gap-8 md:flex" aria-label="Navigation principale">
             <a href="#features" className="text-sm font-medium text-slate-600 hover:text-slate-900">
               Fonctionnalités
             </a>
@@ -38,33 +38,32 @@ export function LandingPage(): JSX.Element {
       </header>
 
       {/* Hero */}
-      <section className="relative overflow-hidden pb-20 pt-32">
+      <section className="relative overflow-hidden pb-20 pt-32" aria-labelledby="hero-heading">
         {/* Background gradient */}
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(45%_40%_at_50%_60%,rgba(14,165,233,0.1),transparent)]" />
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(45%_40%_at_50%_60%,rgba(14,165,233,0.1),transparent)]" aria-hidden="true" />
 
         <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl">
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-brand-200 bg-brand-50 px-4 py-1.5 text-sm font-medium text-brand-700">
-              <Sparkles className="h-4 w-4" />
+              <Sparkles className="h-4 w-4" aria-hidden="true" />
               Simple, rapide, efficace
             </div>
-            <h1 className="text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
-              Le CRM{' '}
+            <h1 id="hero-heading" className="text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl md:text-6xl">
+              Le{' '}
               <span className="bg-gradient-to-r from-brand-500 to-brand-600 bg-clip-text text-transparent">
-                minimaliste
+                CRM simple
               </span>
-              <br />
-              pour freelances
+              {' '}pour freelances et TPE
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">
-              5 minutes pour démarrer, zéro bullshit. Gérez vos contacts et vos opportunités
-              sans vous perdre dans des fonctionnalités inutiles.
+              5 minutes pour démarrer, zéro bullshit. Gérez vos contacts et suivez vos prospects
+              sans vous perdre dans des fonctionnalités inutiles. L'alternative simple à HubSpot et Pipedrive.
             </p>
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Link to="/login">
-                <Button size="lg" className="group px-8">
+                <Button size="lg" className="group px-8" aria-label="Créer un compte gratuit pour essayer Anso">
                   Commencer gratuitement
-                  <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                  <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" aria-hidden="true" />
                 </Button>
               </Link>
             </div>
@@ -76,45 +75,45 @@ export function LandingPage(): JSX.Element {
       </section>
 
       {/* Features */}
-      <section id="features" className="bg-slate-50 py-24">
+      <section id="features" className="bg-slate-50 py-24" aria-labelledby="features-heading">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-              Tout ce dont vous avez besoin
+            <h2 id="features-heading" className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+              Fonctionnalités essentielles pour votre gestion client
             </h2>
             <p className="mt-4 text-lg text-slate-600">
-              Pas de fonctionnalités superflues. Juste l'essentiel pour gérer votre activité.
+              Pas de fonctionnalités superflues. Juste l'essentiel pour gérer votre activité de freelance ou TPE.
             </p>
           </div>
           <div className="mt-16 grid gap-8 md:grid-cols-3">
             <FeatureCard
               icon={Users}
-              title="Gestion des contacts"
-              description="Importez et organisez vos contacts en quelques clics. Tags personnalisés, notes détaillées et recherche instantanée."
+              title="Gestion des contacts simplifiée"
+              description="Importez et organisez vos contacts en quelques clics. Tags personnalisés, notes détaillées et recherche instantanée pour retrouver vos clients."
             />
             <FeatureCard
               icon={Kanban}
-              title="Pipeline visuel"
-              description="Suivez vos opportunités avec un tableau Kanban intuitif. Glissez-déposez vos deals entre les étapes."
+              title="Pipeline de ventes visuel"
+              description="Suivez vos opportunités commerciales avec un tableau Kanban intuitif. Glissez-déposez vos deals entre les étapes de votre cycle de vente."
             />
             <FeatureCard
               icon={Zap}
-              title="Rapide et simple"
-              description="Interface épurée, chargement instantané. Pas de temps perdu, concentrez-vous sur l'essentiel."
+              title="Interface rapide et simple"
+              description="Interface épurée, chargement instantané. Pas de temps perdu en formation, concentrez-vous sur l'essentiel : vos clients."
             />
           </div>
         </div>
       </section>
 
       {/* Pricing */}
-      <section id="pricing" className="py-24">
+      <section id="pricing" className="py-24" aria-labelledby="pricing-heading">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+            <h2 id="pricing-heading" className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
               Tarifs simples et transparents
             </h2>
             <p className="mt-4 text-lg text-slate-600">
-              Commencez gratuitement, évoluez selon vos besoins.
+              CRM gratuit pour démarrer, évoluez selon vos besoins. Sans engagement.
             </p>
           </div>
           <div className="mt-16 grid gap-8 lg:grid-cols-3">
@@ -160,19 +159,19 @@ export function LandingPage(): JSX.Element {
       </section>
 
       {/* CTA */}
-      <section className="bg-brand-500 py-16">
+      <section className="bg-brand-500 py-16" aria-labelledby="cta-heading">
         <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+          <h2 id="cta-heading" className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
             Prêt à simplifier votre gestion client ?
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-lg text-brand-100">
-            Rejoignez les freelances et petites équipes qui ont choisi la simplicité.
+            Rejoignez les freelances et petites équipes qui ont choisi la simplicité avec notre CRM français.
           </p>
           <div className="mt-8">
             <Link to="/login">
-              <Button variant="secondary" size="lg" className="px-8">
+              <Button variant="secondary" size="lg" className="px-8" aria-label="Créer un compte Anso gratuit">
                 Créer mon compte gratuit
-                <ArrowRight className="ml-2 h-5 w-5" />
+                <ArrowRight className="ml-2 h-5 w-5" aria-hidden="true" />
               </Button>
             </Link>
           </div>
@@ -180,12 +179,12 @@ export function LandingPage(): JSX.Element {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-slate-200 bg-white py-12">
+      <footer className="border-t border-slate-200 bg-white py-12" role="contentinfo">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
-            <div className="flex items-center gap-2">
+            <Link to="/" className="flex items-center gap-2" aria-label="Anso - Accueil">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-500">
-                <svg className="h-5 w-5 text-white" viewBox="0 0 32 32" fill="none">
+                <svg className="h-5 w-5 text-white" viewBox="0 0 32 32" fill="none" aria-hidden="true">
                   <path
                     d="M8 22L16 10L24 22H8Z"
                     stroke="currentColor"
@@ -196,12 +195,12 @@ export function LandingPage(): JSX.Element {
                 </svg>
               </div>
               <span className="text-lg font-semibold text-slate-900">Anso</span>
-            </div>
-            <div className="flex gap-8 text-sm text-slate-500">
+            </Link>
+            <nav className="flex gap-8 text-sm text-slate-500" aria-label="Liens légaux">
               <a href="#" className="hover:text-slate-900">Mentions légales</a>
               <a href="#" className="hover:text-slate-900">Confidentialité</a>
               <a href="#" className="hover:text-slate-900">CGV</a>
-            </div>
+            </nav>
             <p className="text-sm text-slate-500">
               © {new Date().getFullYear()} Anso. Tous droits réservés.
             </p>

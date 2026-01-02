@@ -1,0 +1,21 @@
+{
+  "name": "Anso - CRM pour freelances et TPE",
+  "short_name": "Anso",
+  "description": "Le CRM minimaliste pour freelances et petites entreprises. Gestion de contacts et suivi des opportunités.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0ea5e9",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

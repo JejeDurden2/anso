@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://anso.tech/sitemap.xml
+
+# Disallow admin/auth paths from indexing
+Disallow: /app/
+Disallow: /api/
