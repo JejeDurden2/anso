@@ -7,10 +7,11 @@ export interface DropdownProps {
   trigger: ReactNode;
   children: ReactNode;
   align?: 'left' | 'right';
+  position?: 'bottom' | 'top';
   className?: string;
 }
 
-export function Dropdown({ trigger, children, align = 'left', className }: DropdownProps): JSX.Element {
+export function Dropdown({ trigger, children, align = 'left', position = 'bottom', className }: DropdownProps): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -31,8 +32,9 @@ export function Dropdown({ trigger, children, align = 'left', className }: Dropd
       {isOpen && (
         <div
           className={cn(
-            'absolute z-50 mt-2 min-w-[12rem] rounded-lg border border-slate-200 bg-white py-1 shadow-lg',
-            align === 'left' ? 'left-0' : 'right-0'
+            'absolute z-50 min-w-[12rem] rounded-lg border border-slate-200 bg-white py-1 shadow-lg',
+            align === 'left' ? 'left-0' : 'right-0',
+            position === 'bottom' ? 'mt-2 top-full' : 'mb-2 bottom-full'
           )}
         >
           {children}

@@ -129,10 +129,10 @@ export function SettingsPage(): JSX.Element {
   };
 
   return (
-    <div className="p-8">
-      <h1 className="text-2xl font-bold text-slate-900">Paramètres</h1>
+    <div className="p-4 sm:p-6 lg:p-8">
+      <h1 className="text-xl font-bold text-slate-900 sm:text-2xl">Paramètres</h1>
 
-      <div className="mt-8 max-w-4xl space-y-6">
+      <div className="mt-6 max-w-4xl space-y-4 sm:mt-8 sm:space-y-6">
         {/* Profile */}
         <Card>
           <CardHeader>
@@ -201,7 +201,7 @@ export function SettingsPage(): JSX.Element {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="grid gap-4 sm:grid-cols-3">
+            <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
               {(['FREE', 'SOLO', 'TEAM'] as const).map((plan) => (
                 <PlanCard
                   key={plan}

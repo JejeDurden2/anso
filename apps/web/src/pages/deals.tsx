@@ -73,12 +73,12 @@ export function DealsPage(): JSX.Element {
   }
 
   return (
-    <div className="flex h-full flex-col p-8">
+    <div className="flex h-full flex-col p-4 sm:p-6 lg:p-8">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Pipeline</h1>
-          <div className="mt-1 flex items-center gap-4 text-sm text-slate-600">
+          <h1 className="text-xl font-bold text-slate-900 sm:text-2xl">Pipeline</h1>
+          <div className="mt-1 flex flex-wrap items-center gap-2 text-sm text-slate-600 sm:gap-4">
             <span>
               {totalDeals} opportunité{totalDeals !== 1 ? 's' : ''}
             </span>
@@ -96,14 +96,17 @@ export function DealsPage(): JSX.Element {
             )}
           </div>
         </div>
-        <Button onClick={() => handleNewDeal()}>
+        <Button size="sm" className="w-full sm:w-auto sm:size-default" onClick={() => handleNewDeal()}>
           <Plus className="mr-2 h-4 w-4" />
-          Nouvelle opportunité
+          <span className="sm:hidden">Nouvelle</span>
+          <span className="hidden sm:inline">Nouvelle opportunité</span>
         </Button>
       </div>
 
-      {/* Kanban board */}
-      <div className="mt-6 flex-1 overflow-hidden">
+      {/* Kanban board with horizontal scroll hint for mobile */}
+      <div className="relative mt-4 flex-1 overflow-hidden sm:mt-6">
+        {/* Scroll hint for mobile */}
+        <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-8 bg-gradient-to-l from-slate-100 to-transparent sm:hidden" />
         <KanbanBoard
           workspaceId={workspaceId}
           stages={stages}

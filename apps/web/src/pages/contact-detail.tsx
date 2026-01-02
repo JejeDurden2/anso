@@ -48,7 +48,7 @@ export function ContactDetailPage(): JSX.Element {
 
   if (!contact) {
     return (
-      <div className="p-8">
+      <div className="p-4 sm:p-6 lg:p-8">
         <Link
           to="/app/contacts"
           className="inline-flex items-center gap-2 text-sm text-slate-600 hover:text-slate-900"
@@ -56,7 +56,7 @@ export function ContactDetailPage(): JSX.Element {
           <ArrowLeft className="h-4 w-4" />
           Retour aux contacts
         </Link>
-        <Card className="mt-6 p-12 text-center">
+        <Card className="mt-6 p-8 text-center sm:p-12">
           <h2 className="text-lg font-medium text-slate-900">Contact introuvable</h2>
           <p className="mt-2 text-slate-600">
             Ce contact n&apos;existe pas ou a été supprimé.
@@ -70,7 +70,7 @@ export function ContactDetailPage(): JSX.Element {
   }
 
   return (
-    <div className="p-8">
+    <div className="p-4 sm:p-6 lg:p-8">
       {/* Back link */}
       <Link
         to="/app/contacts"
@@ -80,17 +80,17 @@ export function ContactDetailPage(): JSX.Element {
         Retour aux contacts
       </Link>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-3">
+      <div className="mt-4 grid gap-4 sm:mt-6 sm:gap-6 lg:grid-cols-3">
         {/* Main info */}
         <div className="lg:col-span-2">
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between">
-              <div className="flex items-center gap-4">
-                <Avatar name={contact.name} size="xl" />
-                <div>
-                  <h1 className="text-xl font-bold text-slate-900">{contact.name}</h1>
+            <CardHeader className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-center gap-3 sm:gap-4">
+                <Avatar name={contact.name} size="lg" className="sm:h-12 sm:w-12" />
+                <div className="min-w-0 flex-1">
+                  <h1 className="text-lg font-bold text-slate-900 truncate sm:text-xl">{contact.name}</h1>
                   {contact.company && (
-                    <p className="text-slate-600">{contact.company}</p>
+                    <p className="text-sm text-slate-600 truncate sm:text-base">{contact.company}</p>
                   )}
                 </div>
               </div>
@@ -98,6 +98,7 @@ export function ContactDetailPage(): JSX.Element {
                 <Button
                   variant="outline"
                   size="sm"
+                  className="flex-1 sm:flex-none"
                   onClick={() => setIsEditModalOpen(true)}
                 >
                   <Edit className="mr-2 h-4 w-4" />
