@@ -1,9 +1,4 @@
-import { useEffect } from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { Loader2, Trash2, User, Tag } from 'lucide-react';
-
+import type { Stage, Contact } from '@anso/types';
 import {
   Modal,
   ModalHeader,
@@ -13,10 +8,14 @@ import {
   Input,
   Label,
 } from '@anso/ui';
-import type { Stage, Contact } from '@anso/types';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Loader2, Trash2, User, Tag } from 'lucide-react';
+import { useEffect } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import { z } from 'zod';
 
-import { useCreateDeal, useUpdateDeal, useDeleteDeal, type DealWithRelations } from '@/services/deals';
 import { useContacts } from '@/services/contacts';
+import { useCreateDeal, useUpdateDeal, useDeleteDeal, type DealWithRelations } from '@/services/deals';
 
 const dealSchema = z.object({
   title: z

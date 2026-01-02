@@ -1,9 +1,4 @@
-import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { Loader2, X } from 'lucide-react';
-
+import type { Contact } from '@anso/types';
 import {
   Modal,
   ModalHeader,
@@ -14,7 +9,11 @@ import {
   Label,
   Badge,
 } from '@anso/ui';
-import type { Contact } from '@anso/types';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Loader2, X } from 'lucide-react';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 import { useCreateContact, useUpdateContact } from '@/services/contacts';
 

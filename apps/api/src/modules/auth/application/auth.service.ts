@@ -1,6 +1,7 @@
+import { randomBytes, createHash } from 'crypto';
+
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { randomBytes, createHash } from 'crypto';
 
 import { PrismaService } from '@/shared/infrastructure/prisma/prisma.service';
 

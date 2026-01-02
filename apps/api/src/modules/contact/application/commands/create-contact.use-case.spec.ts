@@ -1,9 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { CreateContactUseCase } from './create-contact.use-case';
-import { PrismaService } from '@/shared/infrastructure/prisma/prisma.service';
 import { PlanLimitsService } from '@/modules/billing/application/services/plan-limits.service';
+import { PrismaService } from '@/shared/infrastructure/prisma/prisma.service';
 import { TracingService } from '@/shared/infrastructure/tracing/tracing.service';
+
+import { CreateContactUseCase } from './create-contact.use-case';
 
 describe('CreateContactUseCase', () => {
   let useCase: CreateContactUseCase;

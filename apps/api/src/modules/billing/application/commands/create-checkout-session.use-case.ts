@@ -4,12 +4,13 @@ import { Plan } from '@prisma/client';
 import { Result } from '@/shared/domain';
 import { PrismaService } from '@/shared/infrastructure/prisma/prisma.service';
 import { TracingService } from '@/shared/infrastructure/tracing/tracing.service';
-import { StripeService } from '../../infrastructure/services/stripe.service';
+
 import {
   WorkspaceNotFoundError,
   StripeCustomerCreationError,
   StripeCheckoutError,
 } from '../../domain/errors/billing.errors';
+import { StripeService } from '../../infrastructure/services/stripe.service';
 
 interface CreateCheckoutSessionCommand {
   workspaceId: string;

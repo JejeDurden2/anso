@@ -1,5 +1,5 @@
-import { IsEnum, IsUrl } from 'class-validator';
 import { Plan } from '@prisma/client';
+import { IsEnum, IsUrl } from 'class-validator';
 
 export class CreateCheckoutDto {
   @IsEnum(Plan, { message: 'Plan must be SOLO or TEAM' })

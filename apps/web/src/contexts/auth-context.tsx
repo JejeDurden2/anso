@@ -1,6 +1,6 @@
+import type { AuthUser } from '@anso/types';
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
 
-import type { AuthUser } from '@anso/types';
 
 import { authService } from '@/services/auth';
 

@@ -10,8 +10,10 @@ import {
 import { Request } from 'express';
 
 import { JwtAuthGuard } from '@/shared/infrastructure/guards';
-import { GetWorkspacesUseCase } from '../../application/queries/get-workspaces.use-case';
+
 import { CreateWorkspaceUseCase } from '../../application/commands/create-workspace.use-case';
+import { GetWorkspacesUseCase } from '../../application/queries/get-workspaces.use-case';
+
 import { CreateWorkspaceDto } from './dtos/create-workspace.dto';
 
 interface AuthenticatedRequest extends Request {

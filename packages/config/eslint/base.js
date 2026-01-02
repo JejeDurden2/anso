@@ -33,8 +33,9 @@ module.exports = {
   },
   settings: {
     'import/resolver': {
-      typescript: true,
-      node: true,
+      typescript: {
+        alwaysTryTypes: true,
+      },
     },
   },
   ignorePatterns: ['node_modules', 'dist', 'build', '.turbo'],

@@ -1,12 +1,14 @@
 import { Module } from '@nestjs/common';
 
-import { ContactController } from './infrastructure/http/contact.controller';
-import { GetContactsUseCase } from './application/queries/get-contacts.use-case';
-import { GetContactByIdUseCase } from './application/queries/get-contact-by-id.use-case';
-import { CreateContactUseCase } from './application/commands/create-contact.use-case';
-import { UpdateContactUseCase } from './application/commands/update-contact.use-case';
-import { DeleteContactUseCase } from './application/commands/delete-contact.use-case';
 import { BillingModule } from '../billing/billing.module';
+
+import { CreateContactUseCase } from './application/commands/create-contact.use-case';
+import { DeleteContactUseCase } from './application/commands/delete-contact.use-case';
+import { UpdateContactUseCase } from './application/commands/update-contact.use-case';
+import { GetContactByIdUseCase } from './application/queries/get-contact-by-id.use-case';
+import { GetContactsUseCase } from './application/queries/get-contacts.use-case';
+import { ContactController } from './infrastructure/http/contact.controller';
+
 
 @Module({
   imports: [BillingModule],

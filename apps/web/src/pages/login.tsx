@@ -1,6 +1,6 @@
+import { Button, Card, CardContent } from '@anso/ui';
 import { Navigate } from 'react-router-dom';
 
-import { Button, Card, CardContent } from '@anso/ui';
 
 import { useAuth } from '@/contexts/auth-context';
 

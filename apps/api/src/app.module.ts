@@ -1,15 +1,15 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
-import { PrismaModule } from './shared/infrastructure/prisma/prisma.module';
-import { TracingModule } from './shared/infrastructure/tracing/tracing.module';
+import { HealthController } from './health.controller';
 import { AuthModule } from './modules/auth/auth.module';
-import { WorkspaceModule } from './modules/workspace/workspace.module';
+import { BillingModule } from './modules/billing/billing.module';
 import { ContactModule } from './modules/contact/contact.module';
 import { DealModule } from './modules/deal/deal.module';
 import { StageModule } from './modules/stage/stage.module';
-import { BillingModule } from './modules/billing/billing.module';
-import { HealthController } from './health.controller';
+import { WorkspaceModule } from './modules/workspace/workspace.module';
+import { PrismaModule } from './shared/infrastructure/prisma/prisma.module';
+import { TracingModule } from './shared/infrastructure/tracing/tracing.module';
 
 @Module({
   imports: [

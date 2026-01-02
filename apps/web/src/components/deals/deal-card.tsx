@@ -1,8 +1,8 @@
+import { Card } from '@anso/ui';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { GripVertical, User } from 'lucide-react';
 
-import { Card } from '@anso/ui';
 
 import type { DealWithRelations } from '@/services/deals';
 

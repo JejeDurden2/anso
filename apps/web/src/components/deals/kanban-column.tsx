@@ -1,13 +1,13 @@
-import { useState } from 'react';
+import type { Stage } from '@anso/types';
+import { Button, Input } from '@anso/ui';
 import { useDroppable } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { Plus } from 'lucide-react';
+import { useState } from 'react';
 
-import { Button, Input } from '@anso/ui';
-import type { Stage } from '@anso/types';
+import type { DealWithRelations } from '@/services/deals';
 
 import { DealCard } from './deal-card';
-import type { DealWithRelations } from '@/services/deals';
 
 interface KanbanColumnProps {
   stage: Stage;

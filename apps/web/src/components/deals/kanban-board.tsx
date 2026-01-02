@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import type { Stage } from '@anso/types';
 import {
   DndContext,
   DragOverlay,
@@ -12,12 +12,12 @@ import {
   type DragOverEvent,
 } from '@dnd-kit/core';
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
+import { useState, useMemo } from 'react';
 
-import type { Stage } from '@anso/types';
-
-import { KanbanColumn } from './kanban-column';
-import { DealCardOverlay } from './deal-card';
 import { useMoveDeal, type DealWithRelations } from '@/services/deals';
+
+import { DealCardOverlay } from './deal-card';
+import { KanbanColumn } from './kanban-column';
 
 interface KanbanBoardProps {
   workspaceId: string;

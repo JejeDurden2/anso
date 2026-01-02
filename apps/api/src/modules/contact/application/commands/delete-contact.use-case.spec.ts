@@ -1,7 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { DeleteContactUseCase } from './delete-contact.use-case';
 import { PrismaService } from '@/shared/infrastructure/prisma/prisma.service';
+
+import { DeleteContactUseCase } from './delete-contact.use-case';
 
 describe('DeleteContactUseCase', () => {
   let useCase: DeleteContactUseCase;

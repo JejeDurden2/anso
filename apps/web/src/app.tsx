@@ -1,13 +1,13 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
-import { AuthProvider } from '@/contexts/auth-context';
 import { ProtectedRoute } from '@/components/auth/protected-route';
 import { AppLayout } from '@/components/layout/app-layout';
+import { AuthProvider } from '@/contexts/auth-context';
+import { ContactDetailPage } from '@/pages/contact-detail';
+import { ContactsPage } from '@/pages/contacts';
+import { DealsPage } from '@/pages/deals';
 import { LandingPage } from '@/pages/landing';
 import { LoginPage } from '@/pages/login';
-import { ContactsPage } from '@/pages/contacts';
-import { ContactDetailPage } from '@/pages/contact-detail';
-import { DealsPage } from '@/pages/deals';
 import { SettingsPage } from '@/pages/settings';
 
 export function App(): JSX.Element {

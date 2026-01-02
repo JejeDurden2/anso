@@ -1,12 +1,12 @@
+import { Button, Input, Card, Badge, Avatar } from '@anso/ui';
+import { Plus, Search, Upload, X, Loader2 } from 'lucide-react';
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Plus, Search, Upload, X, Loader2 } from 'lucide-react';
 
-import { Button, Input, Card, Badge, Avatar } from '@anso/ui';
 
+import { ContactModal } from '@/components/contacts/contact-modal';
 import { useCurrentWorkspace } from '@/hooks/use-workspace';
 import { useContacts, useContactTags, type ContactFilters } from '@/services/contacts';
-import { ContactModal } from '@/components/contacts/contact-modal';
 
 export function ContactsPage(): JSX.Element {
   const { workspaceId, isLoading: isWorkspaceLoading } = useCurrentWorkspace();

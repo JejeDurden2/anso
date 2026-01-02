@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Plan } from '@prisma/client';
 
 import { PrismaService } from '@/shared/infrastructure/prisma/prisma.service';
+
 import { getPlanContactLimit } from '../../domain/constants/plans';
 
 export interface PlanLimitCheck {

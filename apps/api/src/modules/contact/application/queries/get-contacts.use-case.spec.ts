@@ -1,7 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { GetContactsUseCase } from './get-contacts.use-case';
 import { PrismaService } from '@/shared/infrastructure/prisma/prisma.service';
+
+import { GetContactsUseCase } from './get-contacts.use-case';
 
 describe('GetContactsUseCase', () => {
   let useCase: GetContactsUseCase;

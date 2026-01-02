@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom';
-import { ArrowRight, Users, Kanban, Zap, Check, Sparkles } from 'lucide-react';
-
 import { Button } from '@anso/ui';
+import { ArrowRight, Users, Kanban, Zap, Check, Sparkles } from 'lucide-react';
+import { Link } from 'react-router-dom';
+
 
 export function LandingPage(): JSX.Element {
   return (
@@ -57,7 +57,7 @@ export function LandingPage(): JSX.Element {
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-600">
               5 minutes pour démarrer, zéro bullshit. Gérez vos contacts et suivez vos prospects
-              sans vous perdre dans des fonctionnalités inutiles. L'alternative simple à HubSpot et Pipedrive.
+              sans vous perdre dans des fonctionnalités inutiles. L&apos;alternative simple à HubSpot et Pipedrive.
             </p>
             <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Link to="/login">
@@ -68,7 +68,7 @@ export function LandingPage(): JSX.Element {
               </Link>
             </div>
             <p className="mt-4 text-sm text-slate-500">
-              Gratuit jusqu'à 10 contacts · Sans carte bancaire
+              Gratuit jusqu&apos;à 10 contacts · Sans carte bancaire
             </p>
           </div>
         </div>
@@ -82,7 +82,7 @@ export function LandingPage(): JSX.Element {
               Fonctionnalités essentielles pour votre gestion client
             </h2>
             <p className="mt-4 text-lg text-slate-600">
-              Pas de fonctionnalités superflues. Juste l'essentiel pour gérer votre activité de freelance ou TPE.
+              Pas de fonctionnalités superflues. Juste l&apos;essentiel pour gérer votre activité de freelance ou TPE.
             </p>
           </div>
           <div className="mt-16 grid gap-8 md:grid-cols-3">

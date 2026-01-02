@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 
+import { PlanLimitsService } from '@/modules/billing/application/services/plan-limits.service';
+import { Result } from '@/shared/domain';
 import { PrismaService } from '@/shared/infrastructure/prisma/prisma.service';
 import { TracingService } from '@/shared/infrastructure/tracing/tracing.service';
-import { Result } from '@/shared/domain';
-import { PlanLimitsService } from '@/modules/billing/application/services/plan-limits.service';
 
 interface CreateContactCommand {
   workspaceId: string;

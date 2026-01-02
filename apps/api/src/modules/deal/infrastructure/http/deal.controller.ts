@@ -12,10 +12,12 @@ import {
 } from '@nestjs/common';
 
 import { JwtAuthGuard, WorkspaceGuard } from '@/shared/infrastructure/guards';
-import { GetDealsUseCase } from '../../application/queries/get-deals.use-case';
+
 import { CreateDealUseCase } from '../../application/commands/create-deal.use-case';
-import { UpdateDealUseCase } from '../../application/commands/update-deal.use-case';
 import { DeleteDealUseCase } from '../../application/commands/delete-deal.use-case';
+import { UpdateDealUseCase } from '../../application/commands/update-deal.use-case';
+import { GetDealsUseCase } from '../../application/queries/get-deals.use-case';
+
 import { CreateDealDto } from './dtos/create-deal.dto';
 import { UpdateDealDto } from './dtos/update-deal.dto';
 

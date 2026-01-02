@@ -1,9 +1,10 @@
 // Initialize OpenTelemetry before importing anything else
+// eslint-disable-next-line import/order
 import { initializeTracing } from './instrumentation';
 initializeTracing();
 
-import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
 import cookieParser from 'cookie-parser';
 
 import { AppModule } from './app.module';
@@ -44,4 +45,7 @@ async function bootstrap(): Promise<void> {
   console.log(`🚀 API running on http://localhost:${port}/api`);
 }
 
-bootstrap();
+bootstrap().catch((err) => {
+  console.error('Failed to start application:', err);
+  process.exit(1);
+});

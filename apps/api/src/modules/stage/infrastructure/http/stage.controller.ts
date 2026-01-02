@@ -11,14 +11,16 @@ import {
 } from '@nestjs/common';
 
 import { JwtAuthGuard, WorkspaceGuard } from '@/shared/infrastructure/guards';
-import { GetStagesUseCase } from '../../application/queries/get-stages.use-case';
+
 import { CreateStageUseCase } from '../../application/commands/create-stage.use-case';
-import { UpdateStageUseCase } from '../../application/commands/update-stage.use-case';
-import { ReorderStagesUseCase } from '../../application/commands/reorder-stages.use-case';
 import { DeleteStageUseCase } from '../../application/commands/delete-stage.use-case';
+import { ReorderStagesUseCase } from '../../application/commands/reorder-stages.use-case';
+import { UpdateStageUseCase } from '../../application/commands/update-stage.use-case';
+import { GetStagesUseCase } from '../../application/queries/get-stages.use-case';
+
 import { CreateStageDto } from './dtos/create-stage.dto';
-import { UpdateStageDto } from './dtos/update-stage.dto';
 import { ReorderStagesDto } from './dtos/reorder-stages.dto';
+import { UpdateStageDto } from './dtos/update-stage.dto';
 
 @Controller('workspaces/:wid/stages')
 @UseGuards(JwtAuthGuard, WorkspaceGuard)

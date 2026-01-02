@@ -4,6 +4,7 @@ import Stripe from 'stripe';
 
 import { Result } from '@/shared/domain';
 import { PrismaService } from '@/shared/infrastructure/prisma/prisma.service';
+
 import { StripeService } from '../../infrastructure/services/stripe.service';
 
 @Injectable()

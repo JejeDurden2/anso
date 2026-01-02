@@ -1,7 +1,7 @@
+import type { Workspace, WorkspaceMember } from '@anso/types';
 import { useQuery } from '@tanstack/react-query';
 import { create } from 'zustand';
 
-import type { Workspace, WorkspaceMember } from '@anso/types';
 
 import { apiClient } from '@/lib/api-client';
 

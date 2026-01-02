@@ -1,12 +1,12 @@
+import { Button, Card, CardContent, CardHeader, Avatar, Badge } from '@anso/ui';
+import { ArrowLeft, Mail, Phone, Building, Edit, Trash2, Loader2 } from 'lucide-react';
 import { useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Mail, Phone, Building, Edit, Trash2, Loader2 } from 'lucide-react';
 
-import { Button, Card, CardContent, CardHeader, Avatar, Badge } from '@anso/ui';
 
+import { ContactModal } from '@/components/contacts/contact-modal';
 import { useCurrentWorkspace } from '@/hooks/use-workspace';
 import { useContact, useDeleteContact } from '@/services/contacts';
-import { ContactModal } from '@/components/contacts/contact-modal';
 
 export function ContactDetailPage(): JSX.Element {
   const { id } = useParams<{ id: string }>();
@@ -59,7 +59,7 @@ export function ContactDetailPage(): JSX.Element {
         <Card className="mt-6 p-12 text-center">
           <h2 className="text-lg font-medium text-slate-900">Contact introuvable</h2>
           <p className="mt-2 text-slate-600">
-            Ce contact n'existe pas ou a été supprimé.
+            Ce contact n&apos;existe pas ou a été supprimé.
           </p>
           <Button className="mt-4" onClick={() => navigate('/app/contacts')}>
             Retour à la liste

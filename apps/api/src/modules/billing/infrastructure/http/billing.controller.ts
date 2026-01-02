@@ -9,13 +9,15 @@ import {
   RawBodyRequest,
   Headers,
 } from '@nestjs/common';
-import { Request } from 'express';
 import { Plan } from '@prisma/client';
+import { Request } from 'express';
 
 import { JwtAuthGuard, WorkspaceGuard } from '@/shared/infrastructure/guards';
+
 import { CreateCheckoutSessionUseCase } from '../../application/commands/create-checkout-session.use-case';
 import { CreatePortalSessionUseCase } from '../../application/commands/create-portal-session.use-case';
 import { HandleWebhookUseCase } from '../../application/commands/handle-webhook.use-case';
+
 import { CreateCheckoutDto } from './dtos/create-checkout.dto';
 import { CreatePortalDto } from './dtos/create-portal.dto';
 

@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import { Plus, Loader2 } from 'lucide-react';
-
 import { Button, Card } from '@anso/ui';
+import { Plus, Loader2 } from 'lucide-react';
+import { useState } from 'react';
 
-import { useCurrentWorkspace } from '@/hooks/use-workspace';
-import { useStages } from '@/services/stages';
-import { useDeals, useCreateDeal, type DealWithRelations } from '@/services/deals';
-import { KanbanBoard } from '@/components/deals/kanban-board';
+
 import { DealModal } from '@/components/deals/deal-modal';
+import { KanbanBoard } from '@/components/deals/kanban-board';
+import { useCurrentWorkspace } from '@/hooks/use-workspace';
+import { useDeals, useCreateDeal, type DealWithRelations } from '@/services/deals';
+import { useStages } from '@/services/stages';
 
 export function DealsPage(): JSX.Element {
   const { workspaceId, isLoading: isWorkspaceLoading } = useCurrentWorkspace();

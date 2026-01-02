@@ -8,12 +8,13 @@ import {
   UseGuards,
   UnauthorizedException,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { AuthGuard } from '@nestjs/passport';
 import { Request, Response } from 'express';
-import { ConfigService } from '@nestjs/config';
+
+import { JwtAuthGuard } from '@/shared/infrastructure/guards';
 
 import { AuthService } from '../../application/auth.service';
-import { JwtAuthGuard } from '@/shared/infrastructure/guards';
 
 interface AuthenticatedUser {
   id: string;

@@ -1,11 +1,11 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-
 import type {
   Contact,
   CreateContactInput,
   UpdateContactInput,
   PaginatedResponse,
 } from '@anso/types';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+
 
 import { apiClient } from '@/lib/api-client';
 
@@ -29,7 +29,7 @@ export interface ContactFilters {
   limit?: number;
 }
 
-interface ContactListResponse extends PaginatedResponse<Contact> {}
+type ContactListResponse = PaginatedResponse<Contact>;
 
 // API functions
 async function fetchContacts(

@@ -13,11 +13,13 @@ import {
 } from '@nestjs/common';
 
 import { JwtAuthGuard, WorkspaceGuard } from '@/shared/infrastructure/guards';
-import { GetContactsUseCase } from '../../application/queries/get-contacts.use-case';
-import { GetContactByIdUseCase } from '../../application/queries/get-contact-by-id.use-case';
+
 import { CreateContactUseCase } from '../../application/commands/create-contact.use-case';
-import { UpdateContactUseCase } from '../../application/commands/update-contact.use-case';
 import { DeleteContactUseCase } from '../../application/commands/delete-contact.use-case';
+import { UpdateContactUseCase } from '../../application/commands/update-contact.use-case';
+import { GetContactByIdUseCase } from '../../application/queries/get-contact-by-id.use-case';
+import { GetContactsUseCase } from '../../application/queries/get-contacts.use-case';
+
 import { CreateContactDto } from './dtos/create-contact.dto';
 import { UpdateContactDto } from './dtos/update-contact.dto';
 

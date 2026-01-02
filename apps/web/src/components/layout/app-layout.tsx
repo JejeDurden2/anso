@@ -1,7 +1,7 @@
-import { Outlet, NavLink } from 'react-router-dom';
-import { Users, Kanban, Settings, LogOut } from 'lucide-react';
-
 import { Avatar, Dropdown, DropdownItem } from '@anso/ui';
+import { Users, Kanban, Settings, LogOut } from 'lucide-react';
+import { Outlet, NavLink } from 'react-router-dom';
+
 
 import { useAuth } from '@/contexts/auth-context';
 import { cn } from '@/lib/utils';

@@ -2,8 +2,9 @@ import { Injectable } from '@nestjs/common';
 
 import { Result } from '@/shared/domain';
 import { PrismaService } from '@/shared/infrastructure/prisma/prisma.service';
-import { StripeService } from '../../infrastructure/services/stripe.service';
+
 import { WorkspaceNotFoundError, StripePortalError } from '../../domain/errors/billing.errors';
+import { StripeService } from '../../infrastructure/services/stripe.service';
 
 interface CreatePortalSessionCommand {
   workspaceId: string;

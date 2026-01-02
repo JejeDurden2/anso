@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
-import { PrismaService } from '@/shared/infrastructure/prisma/prisma.service';
 import { Result } from '@/shared/domain';
+import { PrismaService } from '@/shared/infrastructure/prisma/prisma.service';
 
 @Injectable()
 export class DeleteDealUseCase {

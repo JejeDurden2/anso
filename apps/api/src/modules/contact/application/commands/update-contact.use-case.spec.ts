@@ -1,7 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { UpdateContactUseCase } from './update-contact.use-case';
 import { PrismaService } from '@/shared/infrastructure/prisma/prisma.service';
+
+import { UpdateContactUseCase } from './update-contact.use-case';
 
 describe('UpdateContactUseCase', () => {
   let useCase: UpdateContactUseCase;

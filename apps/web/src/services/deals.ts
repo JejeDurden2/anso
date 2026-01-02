@@ -1,8 +1,9 @@
+import type { Deal, CreateDealInput, UpdateDealInput } from '@anso/types';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
-import type { Deal, CreateDealInput, UpdateDealInput } from '@anso/types';
 
 import { apiClient } from '@/lib/api-client';
+
 import { stageKeys } from './stages';
 
 // Extended Deal type with relations

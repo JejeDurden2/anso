@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import Stripe from 'stripe';
 import { Plan } from '@prisma/client';
+import Stripe from 'stripe';
 
 import { getPlanPriceId } from '../../domain/constants/plans';
 
