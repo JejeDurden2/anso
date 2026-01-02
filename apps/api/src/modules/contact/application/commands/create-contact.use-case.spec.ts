@@ -3,6 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CreateContactUseCase } from './create-contact.use-case';
 import { PrismaService } from '@/shared/infrastructure/prisma/prisma.service';
 import { PlanLimitsService } from '@/modules/billing/application/services/plan-limits.service';
+import { TracingService } from '@/shared/infrastructure/tracing/tracing.service';
 
 describe('CreateContactUseCase', () => {
   let useCase: CreateContactUseCase;
@@ -17,6 +18,10 @@ describe('CreateContactUseCase', () => {
     canAddContact: jest.fn(),
   };
 
+  const mockTracingService = {
+    withSpan: jest.fn().mockImplementation((_name, fn) => fn({ setAttributes: jest.fn() })),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -28,6 +33,10 @@ describe('CreateContactUseCase', () => {
         {
           provide: PlanLimitsService,
           useValue: mockPlanLimitsService,
+        },
+        {
+          provide: TracingService,
+          useValue: mockTracingService,
         },
       ],
     }).compile();

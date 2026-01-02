@@ -49,9 +49,10 @@ Anso is a minimalist CRM SaaS for French freelancers and small businesses (TPE).
 
 ### Infrastructure
 - Vercel for frontend deployment
-- Vercel for backend
+- Railway for backend
 - Neon for PostgreSQL
 - GitHub Actions for CI
+- OpenTelemetry for observability (tracing)
 
 ## Architecture Guidelines
 
@@ -380,6 +381,68 @@ POST   /workspaces/:wid/deals
 GET    /workspaces/:wid/deals/:id
 PATCH  /workspaces/:wid/deals/:id
 DELETE /workspaces/:wid/deals/:id
+```
+
+## Observability (OpenTelemetry)
+
+The API uses OpenTelemetry for distributed tracing, configured in `apps/api/src/instrumentation.ts`.
+
+### Auto-instrumentation
+- HTTP requests (incoming/outgoing)
+- Express middleware and routes
+- NestJS controllers and providers
+- Prisma database queries
+
+### Custom Spans
+Use `TracingService` to add custom spans to use cases:
+
+```typescript
+@Injectable()
+export class MyUseCase {
+  constructor(private readonly tracing: TracingService) {}
+
+  async execute(command: Command): Promise<Result<T>> {
+    return this.tracing.withSpan(
+      'MyUseCase.execute',
+      async (span) => {
+        span.setAttributes({ 'my.attribute': value });
+        // ... business logic
+      },
+      { 'use_case': 'my_use_case' }
+    );
+  }
+}
+```
+
+### Environment Variables
+```bash
+OTEL_EXPORTER_OTLP_ENDPOINT=https://your-collector.railway.app  # Required to enable tracing
+OTEL_EXPORTER_OTLP_HEADERS='{"Authorization":"Bearer xxx"}'     # Optional auth headers
+OTEL_SERVICE_NAME=anso-api                                       # Service name (default: anso-api)
+```
+
+## Billing (Stripe)
+
+Stripe integration for subscription management in `apps/api/src/modules/billing/`.
+
+### Plans
+- **FREE**: 10 contacts max, 1 user
+- **SOLO**: Unlimited contacts, 1 user, 10€/month
+- **TEAM**: Unlimited contacts, 3 users, 20€/month
+
+### Environment Variables
+```bash
+STRIPE_SECRET_KEY=sk_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+STRIPE_SOLO_PRICE_ID=price_...
+STRIPE_TEAM_PRICE_ID=price_...
+```
+
+### API Endpoints
+```
+POST   /workspaces/:wid/billing/checkout  # Create Stripe checkout session
+POST   /workspaces/:wid/billing/portal    # Create Stripe customer portal session
+POST   /billing/webhook                    # Stripe webhook handler
 ```
 
 ## Important Reminders
