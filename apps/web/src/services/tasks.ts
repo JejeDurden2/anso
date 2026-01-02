@@ -116,7 +116,6 @@ export function useCreateTask(workspaceId: string) {
 
       // Optimistic update
       queryClient.setQueryData<TaskWithDeal[]>(taskKeys.list(workspaceId), (old) => {
-        if (!old) return old;
         const optimisticTask: TaskWithDeal = {
           id: `temp-${Date.now()}`,
           workspaceId,
@@ -131,7 +130,7 @@ export function useCreateTask(workspaceId: string) {
           createdAt: new Date(),
           updatedAt: new Date(),
         };
-        return [optimisticTask, ...old];
+        return [optimisticTask, ...(old ?? [])];
       });
 
       return { previousTasks };

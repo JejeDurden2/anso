@@ -127,6 +127,7 @@ export function TasksPage(): JSX.Element {
                 deals={deals}
                 onAdd={handleAddTask}
                 isLoading={createTask.isPending || isDealsLoading}
+                error={createTask.error}
               />
             ) : (
               <p className="text-sm text-slate-500">

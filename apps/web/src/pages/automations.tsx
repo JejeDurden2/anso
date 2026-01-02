@@ -195,11 +195,24 @@ export function AutomationsPage(): JSX.Element {
               défaut ou créez les vôtres.
             </p>
             <div className="mt-6 flex gap-3">
-              <Button variant="outline" onClick={handleSetupDefaults}>
-                <Sparkles className="mr-2 h-4 w-4" />
-                Installer les règles par défaut
+              <Button
+                variant="outline"
+                onClick={handleSetupDefaults}
+                disabled={createMutation.isPending}
+              >
+                {createMutation.isPending ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Installation...
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className="mr-2 h-4 w-4" />
+                    Installer les règles par défaut
+                  </>
+                )}
               </Button>
-              <Button onClick={() => setIsFormOpen(true)}>
+              <Button onClick={() => setIsFormOpen(true)} disabled={createMutation.isPending}>
                 <Plus className="mr-2 h-4 w-4" />
                 Créer une règle
               </Button>

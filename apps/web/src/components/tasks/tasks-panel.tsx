@@ -110,6 +110,7 @@ export function TasksPanel({ deals, isLoading: isDealsLoading }: TasksPanelProps
             deals={deals}
             onAdd={handleAddTask}
             isLoading={createTask.isPending}
+            error={createTask.error}
           />
         )}
       </div>
